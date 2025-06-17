@@ -1,0 +1,45 @@
+# Development override for docker-compose
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+version: '3.8'
+
+services:
+  vllm-server:
+    # Use a lighter model for development
+    command: >
+      --model gpt2
+      --host 0.0.0.0
+      --port 8000
+      --served-model-name chatbot
+      --max-model-len 1024
+      --dtype auto
+      --api-key dev-api-key
+      --disable-log-stats
+      --tensor-parallel-size 1
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    # Development specific volumes
+    volumes:
+      - ./models:/models
+      - ./vllm-cache:/root/.cache/huggingface
+      - ./logs:/app/logs  # Additional logging directory
+
+  jupyter-lab:
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_TOKEN=dev-token
+      - VLLM_SERVER_URL=http://vllm-server:8000
+      - PYTHONPATH=/home/jovyan/work
+    volumes:
+      - ./notebooks:/home/jovyan/work
+      - ./data:/home/jovyan/data
+      - ./jupyter/requirements.txt:/tmp/requirements.txt
+      - ./scripts:/home/jovyan/scripts  # Additional scripts directory
+    # Enable debugging
+    command: >
+      bash -c "
+      uv pip install --system -r /tmp/requirements.txt &&
+      jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root 
+      --NotebookApp.token=dev-token --NotebookApp.password='' 
+      --ServerApp.allow_origin='*' --ServerApp.allow_credentials=True
+      "

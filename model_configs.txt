@@ -1,0 +1,53 @@
+# vLLM Model Configuration Templates
+# Copy the desired configuration to your .env file
+
+# === SMALL MODELS (Good for testing, low memory) ===
+# microsoft/DialoGPT-small
+VLLM_MODEL=microsoft/DialoGPT-small
+VLLM_MAX_MODEL_LEN=1024
+VLLM_TENSOR_PARALLEL_SIZE=1
+
+# === MEDIUM MODELS (Balanced performance) ===
+# microsoft/DialoGPT-medium
+VLLM_MODEL=microsoft/DialoGPT-medium
+VLLM_MAX_MODEL_LEN=2048
+VLLM_TENSOR_PARALLEL_SIZE=1
+
+# Qwen2.5-0.5B-Instruct (Very fast, instruction-tuned)
+VLLM_MODEL=Qwen/Qwen2.5-0.5B-Instruct
+VLLM_MAX_MODEL_LEN=4096
+VLLM_TENSOR_PARALLEL_SIZE=1
+
+# === LARGER MODELS (Better quality, more memory) ===
+# microsoft/DialoGPT-large
+VLLM_MODEL=microsoft/DialoGPT-large
+VLLM_MAX_MODEL_LEN=2048
+VLLM_TENSOR_PARALLEL_SIZE=1
+
+# Qwen2.5-1.5B-Instruct (Good balance of size and quality)
+VLLM_MODEL=Qwen/Qwen2.5-1.5B-Instruct
+VLLM_MAX_MODEL_LEN=8192
+VLLM_TENSOR_PARALLEL_SIZE=1
+
+# Qwen1.5-MoE-A2.7B-Chat (Mixture of Experts, efficient)
+VLLM_MODEL=Qwen/Qwen1.5-MoE-A2.7B-Chat
+VLLM_MAX_MODEL_LEN=4096
+VLLM_TENSOR_PARALLEL_SIZE=1
+
+# === CODE MODELS ===
+# Microsoft Phi-2 (Good for code and reasoning)
+VLLM_MODEL=microsoft/phi-2
+VLLM_MAX_MODEL_LEN=2048
+VLLM_TENSOR_PARALLEL_SIZE=1
+
+# === MULTI-GPU CONFIGURATIONS ===
+# For models that need multiple GPUs, increase tensor_parallel_size
+# Example: Large model with 2 GPUs
+VLLM_MODEL=Qwen/Qwen2.5-7B-Instruct
+VLLM_MAX_MODEL_LEN=4096
+VLLM_TENSOR_PARALLEL_SIZE=2
+
+# === CUSTOM CONFIGURATIONS ===
+# Add your own model configurations here
+# Remember to adjust VLLM_MAX_MODEL_LEN based on your GPU memory
+# and the model's context length requirements

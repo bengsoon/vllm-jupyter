@@ -1,0 +1,149 @@
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Model files and cache
+models/
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.hdf5
+vllm-cache/
+huggingface_cache/
+transformers_cache/
+torch_cache/
+
+# Data files
+data/
+datasets/
+*.csv
+*.json
+*.jsonl
+*.parquet
+*.feather
+*.pkl
+*.pickle
+
+# Logs
+logs/
+*.log
+inference_logs/
+server_logs/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+docker-compose.override.yaml
+*.tar
+*.tar.gz
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+
+# MLOps and experiment tracking
+wandb/
+mlruns/
+.mlflow/
+tensorboard_logs/
+runs/
+
+# Test outputs
+test_outputs/
+benchmark_results/
+inference_results/
+*.benchmark
+
+# Runtime and process files
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Security
+*.pem
+*.key
+*.csr
+*.crt
+*.p12
+*.pfx
+
+# Large files
+*.zip
+*.rar
+*.7z
+*.tar.xz
+*.gz
+
+# Config overrides
+config_override.yml
+config_override.yaml
+local_config.*
+
+# Generated documentation
+docs/_build/
+site/

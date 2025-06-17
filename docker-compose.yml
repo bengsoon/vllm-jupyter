@@ -1,0 +1,70 @@
+services:
+  vllm-server:
+    image: vllm/vllm-openai:latest
+    container_name: vllm-server
+    ports:
+      - "${VLLM_PORT}:${VLLM_PORT}"  # Use environment variable for port
+    environment:
+      - CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}
+    volumes:
+      - ${MODELS_PATH}:/models  # Mount local models directory
+      - ${CACHE_PATH}:/root/.cache/huggingface  # HuggingFace cache
+    command: >
+      --model ${VLLM_MODEL}
+      --host ${VLLM_HOST}
+      --port ${VLLM_PORT}
+      --served-model-name ${VLLM_SERVED_MODEL_NAME}
+      --dtype ${VLLM_DTYPE}
+      --api-key ${VLLM_API_KEY}
+      --disable-log-stats
+      --tensor-parallel-size ${VLLM_TENSOR_PARALLEL_SIZE}
+      --max-model-len ${VLLM_MAX_MODEL_LEN}
+    networks:
+      - vllm-jupyter-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    env_file:
+      - .env
+  jupyter-lab:
+    build:
+      context: ./jupyter
+      dockerfile: Dockerfile
+    container_name: jupyter-lab
+    ports:
+      - "${JUPYTER_PORT}:8888"  # Use environment variable for external port
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN}
+      - JUPYTER_PASSWORD=${JUPYTER_PASSWORD}
+      - VLLM_SERVER_URL=http://vllm-server:${VLLM_PORT}
+      - VLLM_MODEL=${VLLM_MODEL}
+    volumes:
+      - ${NOTEBOOKS_PATH}:/home/jovyan/work  # Mount notebooks directory
+      - ${DATA_PATH}:/home/jovyan/data  # Mount data directory
+      - ./jupyter/requirements.txt:/tmp/requirements.txt
+    networks:
+      - vllm-jupyter-network
+    restart: unless-stopped
+    depends_on:
+      - vllm-server
+    env_file:
+      - .env    
+
+networks:
+  vllm-jupyter-network:
+    driver: bridge
+    name: vllm-jupyter-network
+
+volumes:
+  models:
+    driver: local
+  notebooks:
+    driver: local
+  data:
+    driver: local
