@@ -41,10 +41,48 @@ This project provides a complete setup for running vLLM server for offline batch
    ```bash
    docker-compose up -d
    ```
+   or
+   
+   ```bash
+   make build && make up
+   ```
+   
 
-4. **Access the services**:
-   - **Jupyter Lab**: http://localhost:8888 (token: `your-secure-token-here`)
-   - **vLLM API**: http://localhost:8000 (API key: `your-api-key-here`)
+5. **Access the services**:
+   - **Jupyter Lab**: http://localhost:8888 (`JUPYTER_TOKEN` token as defined in `.env`)
+   - **vLLM API**: http://localhost:8000 (`VLLM_API_KEY` key as defined in `.env`)
+
+## 📖 To get Help
+We have defined the available commands for this project through `Makefile`. To see available commands, just type in `make` in the project folder:
+```
+🚀 vLLM + Jupyter Docker Compose Project
+========================================
+
+Using Docker Compose command: docker compose
+
+Available commands:
+  help        Show this help message
+  build       Build the Docker images
+  up          Start all services
+  down        Stop all services
+  restart     Restart all services
+  logs        Show logs for all services
+  clean       Clean up Docker resources
+  test        Test API connectivity
+  dev-up      Start services in development mode
+  dev-down    Stop development services
+  status      Show service status
+  jupyter-list List running Jupyter servers in the container
+
+Service-specific commands:
+  logs-vllm   Show vLLM server logs
+  logs-jupyter Show Jupyter Lab logs
+
+Development commands:
+  shell-jupyter  Open shell in Jupyter container
+  install-deps   Install additional dependencies
+```
+
 
 ## 📁 Project Structure
 
